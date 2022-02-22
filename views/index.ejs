@@ -49,10 +49,9 @@
                 <!-- form -->
                 <div class="col-12 col-md-8 mt-3 mt-md-0">
                   <form
-                    action="/user/update-info"
+                    action="/update-info"
                     class="row g-3 needs-validation"
                     method="POST"
-                    enctype="multipart/form-data"
                   >
                     <div class="col-6">
                       <!-- first name -->
@@ -211,7 +210,7 @@
             <form
               class="g-3"
               method="post"
-              action="/user/update-avatar"
+              action="/update-avatar"
               enctype="multipart/form-data"
             >
               <div class="input-group mb-3">
@@ -223,7 +222,7 @@
                 />
               </div>
 
-              <input type="hidden" name="user_id" value="<%= user_id %>">
+              <input type="hidden" name="user_id" value="<%= user_id %>" />
 
               <!-- model footer -->
               <div class="modal-footer">
