@@ -43,4 +43,4 @@ const updateAvatar = (user_id, user_avatar) => {
   return User.updateOne({ _id: user_id }, { user_avatar });
 };
 
-module.exports = { User, getUser, updateInfo, updateAvatar };
+module.exports = { getUser, updateInfo, updateAvatar };

@@ -8,13 +8,11 @@
     <%- include('./includes/css-files.ejs') %>
   </head>
   <body>
-    <!-- user info -->
     <main class="container-lg mt-4">
       <div class="row">
         <!-- Dashboard Nav Section -->
         <%- include('./includes/dashboard-nav.ejs', {activeNav : 'skills'}) %>
 
-        <!-- info Section -->
         <section class="col-lg-8 col-md-8 col-12">
           <div class="card shadow p-3">
             <div
@@ -31,17 +29,26 @@
               </a>
             </div>
 
+            <!-- skills list -->
             <div class="card-body p-0">
               <div class="row">
                 <!--  skill 1 -->
+
+                <% if (skills != (null || undefined)) { %>
+
+                <!-- for loop -->
+                <% skills.forEach((skill) => { %>
                 <div class="col-12 mb-2">
                   <div class="shadow-sm p-3">
                     <div class="d-flex justify-content-between mb-2">
-                      <h5>Web development</h5>
+                      <h5><%= skill.title %></h5>
 
                       <div>
                         <a
-                          class="mx-2"
+                          class="mx-2 js-edit-btn"
+                          data-skill-id="<%= skill._id %>"
+                          data-skill-title="<%= skill.title %>"
+                          data-skill-progress_percent="<%= skill.progress_percent %>"
                           role="button"
                           data-bs-toggle="modal"
                           data-bs-target="#edit-skill"
@@ -51,8 +58,10 @@
 
                         <a
                           role="button"
+                          data-skill-id="<%= skill._id %>"
                           data-bs-toggle="modal"
                           data-bs-target="#delete"
+                          class="js-delete-skill-btn"
                         >
                           <i class="fa fa-trash text-danger"></i>
                         </a>
@@ -63,139 +72,18 @@
                       <div
                         class="progress-bar"
                         role="progressbar"
-                        style="width: 100%"
-                        aria-valuenow="100"
+                        style="width: <%= skill.progress_percent %>%"
+                        aria-valuenow="<%= skill.progress_percent %>"
                         aria-valuemin="0"
                         aria-valuemax="100"
                       >
-                        100%
+                        <%= skill.progress_percent %>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <!--  skill 2 -->
-                <div class="col-12 mb-2">
-                  <div class="shadow-sm p-3">
-                    <div class="d-flex justify-content-between mb-2">
-                      <h5>Database</h5>
-
-                      <div>
-                        <a
-                          class="mx-2"
-                          role="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit-skill"
-                        >
-                          <i class="fa fa-pencil-alt text-secondary"></i>
-                        </a>
-
-                        <a
-                          role="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete"
-                        >
-                          <i class="fa fa-trash text-danger"></i>
-                        </a>
-                      </div>
-                    </div>
-
-                    <div class="progress">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 100%"
-                        aria-valuenow="100"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        100%
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!--  skill 3 -->
-                <div class="col-12 mb-2">
-                  <div class="shadow-sm p-3">
-                    <div class="d-flex justify-content-between mb-2">
-                      <h5>Team player</h5>
-
-                      <div>
-                        <a
-                          class="mx-2"
-                          role="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit-skill"
-                        >
-                          <i class="fa fa-pencil-alt text-secondary"></i>
-                        </a>
-
-                        <a
-                          role="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete"
-                        >
-                          <i class="fa fa-trash text-danger"></i>
-                        </a>
-                      </div>
-                    </div>
-
-                    <div class="progress">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 100%"
-                        aria-valuenow="100"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        100%
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!--  skill 4 -->
-                <div class="col-12 mb-2">
-                  <div class="shadow-sm p-3">
-                    <div class="d-flex justify-content-between mb-2">
-                      <h5>Generous</h5>
-
-                      <div>
-                        <a
-                          class="mx-2"
-                          role="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#addSkill"
-                        >
-                          <i class="fa fa-pencil-alt text-secondary"></i>
-                        </a>
-
-                        <a
-                          role="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete"
-                        >
-                          <i class="fa fa-trash text-danger"></i>
-                        </a>
-                      </div>
-                    </div>
-
-                    <div class="progress">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style="width: 100%"
-                        aria-valuenow="100"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        100%
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <% }) } %>
               </div>
             </div>
           </div>
@@ -227,19 +115,25 @@
           </div>
 
           <div class="modal-body">
-            <form class="row g-3">
+            <form action="/skills/add" method="post" class="row g-3">
               <input
                 type="text"
                 class="form-control rounded-pill"
-                id="skill"
+                name="title"
                 placeholder="Skill"
+                required
               />
-              <input type="range" class="form-range" id="customRange1" />
+              <input
+                type="range"
+                name="progress_percent"
+                class="form-range js-add-range-input"
+                id="customRange1"
+                required
+              />
+              <button type="submit" class="btn bg-primary text-white">
+                add
+              </button>
             </form>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn bg-primary text-white">add</button>
           </div>
         </div>
       </div>
@@ -269,21 +163,27 @@
           </div>
 
           <div class="modal-body">
-            <form class="row g-3">
+            <form action="/skills/update" method="post" class="row g-3">
+              <input type="hidden" name="skill_id" id="edit-modal-id" />
               <input
                 type="text"
                 class="form-control rounded-pill"
-                id="skill"
                 placeholder="Skill"
+                name="title"
+                id="skill-title-input"
               />
-              <input type="range" class="form-range" id="customRange1" />
-            </form>
-          </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn bg-primary text-white">
-              Edit
-            </button>
+              <input
+                type="range"
+                class="form-range"
+                name="progress_percent"
+                id="skill-progress-input"
+              />
+
+              <button type="submit" class="btn bg-primary text-white">
+                Edit
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -313,12 +213,50 @@
             >
               No
             </button>
-            <button type="button" class="btn btn-danger">Yes</button>
+
+            <form action="/skills/delete" method="post">
+              <input type="hidden" name="skill_id" id="delete-modal-id" />
+
+              <button
+                type="submit"
+                data-bs-dismiss="modal"
+                class="btn btn-danger"
+              >
+                Yes
+              </button>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
     <%- include('./includes/js-files.ejs') %>
+
+    <script>
+      // edit
+      const attr = ($el, attrName) => $el.getAttribute(attrName);
+      document.querySelectorAll('.js-edit-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = attr(btn, 'data-skill-id');
+          const title = attr(btn, 'data-skill-title');
+          const progress = attr(btn, 'data-skill-progress_percent');
+
+          console.log(id, title, progress);
+
+          document.getElementById('edit-modal-id').value = id;
+          document.getElementById('skill-title-input').value = title;
+          document.getElementById('skill-progress-input').value = progress;
+        });
+      });
+
+      // delete
+      document.querySelectorAll('.js-delete-skill-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = attr(btn, 'data-skill-id');
+          console.log(id)
+          document.getElementById('delete-modal-id').value = id;
+        });
+      });
+    </script>
   </body>
 </html>
