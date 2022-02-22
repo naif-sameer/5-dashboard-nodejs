@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <%- include('./includes/css-files.ejs') %>
+  </head>
+  <body>
+    <main class="container-lg mt-4">
+      <div class="row">
+        <!-- Dashboard Nav Section -->
+        <%- include('./includes/dashboard-nav.ejs', {activeNav : 'education'})
+        %>
+
+        <!-- Education section -->
+        <section class="col-lg-8 col-md-8 col-12">
+          <div class="card p-3">
+            <div class="card-header bg-transparent">
+              <h1 class="fs-3 fw-bold text-primary">Education</h1>
+            </div>
+
+            <div class="card-body">
+              <!-- experience 1 -->
+              <div class="col-12 mb-5">
+                <div class="shadow-sm p-3">
+                  <a href="#">
+                    <h4>
+                      <b>Front end</b>
+                      <span class="fs-5">W3school</span>
+                    </h4>
+                  </a>
+
+                  <a href="#" class="text-black-50 fs-6 d-flex flex-column">
+                    <h6 class="text-black">Youtube</h6>
+                    <span>July 2021</span>
+                  </a>
+                </div>
+              </div>
+
+              <!--  experience  2-->
+              <div class="col-12 mb-5">
+                <div class="shadow-sm p-3">
+                  <a href="#">
+                    <h4>
+                      <b>Back end</b>
+                      <span class="fs-5">W4school</span>
+                    </h4>
+                  </a>
+
+                  <a href="#" class="text-black-50 fs-6 d-flex flex-column">
+                    <h6 class="text-black">Youtube</h6>
+                    <span>March 2022</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <%- include('./includes/js-files.ejs') %>
+  </body>
+</html>

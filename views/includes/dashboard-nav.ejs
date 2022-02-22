@@ -1,0 +1,72 @@
+<% function activeNavBar (nav) { return (nav === activeNav ? 'text-primary':
+'text-secondary')} %>
+
+<div class="col-lg-4 col-md-4 col-12 mb-3">
+  <div class="card shadow p-3 pt-0">
+    <!-- user avatar -->
+    <div
+      class="col-12 d-flex justify-content-center align-items-center p-4 position-relative"
+    >
+      <img
+        src="/images/avatar.jpg"
+        class="user-avatar img-fluid rounded-circle"
+        alt="user avatar"
+      />
+    </div>
+
+    <!-- name -->
+    <div class="text-center">
+      <a class="text-primary fs-4 fw-bold" href="">Naif Sameer</a>
+      <p>Front end Developer</p>
+    </div>
+
+    <!-- dashboard nav -->
+    <nav class="card px-3 py-4 mt-3 d-flex gap-3">
+      <!-- info -->
+
+      <a
+        href="/"
+        class="<%= activeNavBar('index') %> d-flex align-items-center d-inline-block ms-3 border-bottom pb-2"
+      >
+        <i class="fa fa-user pe-2"></i>
+        <span class="fs-6 fw-bold">Info</span>
+      </a>
+
+      <!-- skills -->
+      <a
+        href="/skills"
+        class="<%= activeNavBar('skills') %> d-flex align-items-center d-inline-block ms-3 border-bottom pb-2"
+      >
+        <i class="fa fa-shekel-sign pe-2"></i>
+        <span class="fs-6 fw-bold">Skills</span>
+      </a>
+
+      <!-- experience -->
+      <a
+        href="/experience"
+        class="<%= activeNavBar('experience') %> d-flex align-items-center d-inline-block ms-3 border-bottom pb-2"
+      >
+        <i class="fa fa-object-group pe-2"></i>
+        <span class="fs-6 fw-bold">Experience</span>
+      </a>
+
+      <!-- education -->
+      <a
+        href="/education"
+        class="<%= activeNavBar('education') %> d-flex align-items-center d-inline-block ms-3 border-bottom pb-2"
+      >
+        <i class="fa fa-book pe-2"></i>
+        <span class="fs-6 fw-bold">Education</span>
+      </a>
+
+      <!-- Courses -->
+      <a
+        href="/courses"
+        class="<%= activeNavBar('courses') %> d-flex align-items-center d-inline-block ms-3 border-bottom pb-2"
+      >
+        <i class="fa fa-paperclip pe-2"></i>
+        <span class="fs-6 fw-bold">Courses</span>
+      </a>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <%- include('./includes/css-files.ejs') %>
+  </head>
+  <body>
+    <!-- user info -->
+    <main class="container-lg mt-4">
+      <div class="row">
+        <%- include('./includes/dashboard-nav.ejs', {activeNav : 'index'}) %>
+
+        <!-- info Section -->
+        <section class="col-lg-8 col-md-8 col-12">
+          <div class="card shadow p-3">
+            <div class="card-header bg-transparent">
+              <h1 class="fs-3 fw-bold text-primary">Info</h1>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <!-- image -->
+                <div class="col-md-3">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <div class="position-relative">
+                      <img
+                        src=" /images/avatar.jpg"
+                        class="user-avatar rounded-circle"
+                        alt=""
+                      />
+
+                      <!-- edit image -->
+                      <button
+                        data-bs-toggle="modal"
+                        data-bs-target="#avatar-edit-model"
+                        class="position-absolute btn bg-primary text-white rounded-circle"
+                        style="bottom: 0; left: 0"
+                      >
+                        <i class="fa fa-pencil-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- form -->
+                <div class="col-12 col-md-8 mt-3 mt-md-0">
+                  <form
+                    action="/user/update-info"
+                    class="row g-3 needs-validation"
+                    method="POST"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="col-6">
+                      <!-- first name -->
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control rounded-pill"
+                          placeholder="First Name"
+                          aria-label="fName"
+                          aria-describedby="addon-wrapping"
+                          required
+                          value="Naif"
+                          name="f_name"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- last name -->
+                    <div class="col-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control rounded-pill"
+                          placeholder="Last Name"
+                          aria-label="lName"
+                          aria-describedby="addon-wrapping"
+                          required
+                          value="Sameer"
+                          name="l_name"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- phone code -->
+                    <div class="col-4">
+                      <div class="input-group">
+                        <select
+                          class="form-select rounded-pill"
+                          aria-label="Default select example"
+                          required
+                          name="phone_code"
+                        >
+                          <option selected>+05</option>
+                          <option value="1">+01</option>
+                          <option value="2">+103</option>
+                          <option value="3">+966</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- phone number -->
+                    <div class="col-8">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control rounded-pill"
+                          placeholder="Phone Number"
+                          aria-label="phone"
+                          aria-describedby="addon-wrapping"
+                          required
+                          value="123456789"
+                          name="phone_number"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- email -->
+                    <div class="col-12">
+                      <div class="input-group">
+                        <input
+                          type="email"
+                          class="form-control rounded-pill"
+                          placeholder="Email"
+                          aria-label="email"
+                          aria-describedby="addon-wrapping"
+                          required
+                          value="naif@gmail.com"
+                          name="email"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- gender -->
+                    <div class="col-6">
+                      <div class="input-group">
+                        <select
+                          class="form-select rounded-pill"
+                          aria-label="Default select example"
+                          required
+                          name="gender"
+                        >
+                          <option disabled>Gender</option>
+                          <option value="female">Female</option>
+                          <option selected value="male">Male</option>
+                          <option value="monkey">Other</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- date -->
+                    <div class="col-6">
+                      <div class="input-group">
+                        <input
+                          type="date"
+                          class="form-control rounded-pill"
+                          value="2001-06-04"
+                          name="date"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- save btn -->
+                    <div class="col-12 mt-5">
+                      <button
+                        class="btn bg-primary text-white d-block w-100 rounded-pill"
+                        type="submit"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Edit user avatar image model -->
+    <div
+      class="modal fade"
+      id="avatar-edit-model"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+          <!-- model header -->
+          <div class="modal-header">
+            <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">
+              Edit image profile
+            </h4>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!-- model body -->
+          <div class="modal-body">
+            <form
+              class="g-3"
+              method="post"
+              action="/user/update-avatar"
+              enctype="multipart/form-data"
+            >
+              <div class="input-group mb-3">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="inputGroupFile02"
+                  name="user_avatar"
+                />
+              </div>
+
+              <input type="hidden" name="user_id" value="<%= user_id %>">
+
+              <!-- model footer -->
+              <div class="modal-footer">
+                <button
+                  type="submit"
+                  class="btn bg-primary text-white"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Update"
+                >
+                  update
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('./includes/js-files.ejs') %>
+  </body>
+</html>
