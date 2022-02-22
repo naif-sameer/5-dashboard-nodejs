@@ -1,6 +1,4 @@
-//  nav bar script
-$('.nav-item').on('click', (e) => {
-  console.log('click');
 
-  e.target.classList.add('active');
-});
+
+const userNavAvatar = document.querySelector('.js-nav-user-avatar')
+userNavAvatar.setAttribute('src', localStorage.getItem('user-avatar'))

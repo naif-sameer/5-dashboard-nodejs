@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
   phone_number: { type: String },
   email: { type: String, required: true },
   gender: { type: String },
-  date: { type: Date },
   user_avatar: { type: String },
 });
 
@@ -16,4 +15,32 @@ const User = mongoose.model('User', userSchema);
 
 const getUser = () => User.findOne({});
 
-module.exports = { User, getUser };
+const updateInfo = (user_info) => {
+  const {
+    user_id,
+    f_name,
+    l_name,
+    phone_code,
+    phone_number,
+    email,
+    gender,
+  } = user_info;
+
+  return User.updateOne(
+    { _id: user_id },
+    {
+      f_name,
+      l_name,
+      phone_code,
+      phone_number,
+      email,
+      gender,
+    }
+  );
+};
+
+const updateAvatar = (user_id, user_avatar) => {
+  return User.updateOne({ _id: user_id }, { user_avatar });
+};
+
+module.exports = { User, getUser, updateInfo, updateAvatar };

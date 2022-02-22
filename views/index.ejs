@@ -12,7 +12,8 @@
     <!-- user info -->
     <main class="container-lg mt-4">
       <div class="row">
-        <%- include('./includes/dashboard-nav.ejs', {activeNav : 'index'}) %>
+        <%- include('./includes/dashboard-nav.ejs', {activeNav : 'index',
+        user_info}) %>
 
         <!-- info Section -->
         <section class="col-lg-8 col-md-8 col-12">
@@ -28,9 +29,8 @@
                   <div class="d-flex justify-content-center align-items-center">
                     <div class="position-relative">
                       <img
-                        src=" /images/avatar.jpg"
-                        class="user-avatar rounded-circle"
-                        alt=""
+                        data-user-avatar="/images/<%= user_info.user_avatar %>"
+                        class="user-avatar rounded-circle js-user-avatar"
                       />
 
                       <!-- edit image -->
@@ -53,6 +53,12 @@
                     class="row g-3 needs-validation"
                     method="POST"
                   >
+                    <input
+                      type="hidden"
+                      name="user_id"
+                      value="<%= user_info._id %>"
+                    />
+
                     <div class="col-6">
                       <!-- first name -->
                       <div class="input-group">
@@ -63,7 +69,7 @@
                           aria-label="fName"
                           aria-describedby="addon-wrapping"
                           required
-                          value="Naif"
+                          value="<%= user_info.f_name %>"
                           name="f_name"
                         />
                       </div>
@@ -79,7 +85,7 @@
                           aria-label="lName"
                           aria-describedby="addon-wrapping"
                           required
-                          value="Sameer"
+                          value="<%= user_info.l_name %>"
                           name="l_name"
                         />
                       </div>
@@ -93,11 +99,12 @@
                           aria-label="Default select example"
                           required
                           name="phone_code"
+                          id="phone-code"
                         >
-                          <option selected>+05</option>
-                          <option value="1">+01</option>
-                          <option value="2">+103</option>
+                          <option value="1">+05</option>
+                          <option value="2">+01</option>
                           <option value="3">+966</option>
+                          <option value="4">+103</option>
                         </select>
                       </div>
                     </div>
@@ -106,13 +113,13 @@
                     <div class="col-8">
                       <div class="input-group">
                         <input
-                          type="text"
+                          type="number"
                           class="form-control rounded-pill"
                           placeholder="Phone Number"
                           aria-label="phone"
                           aria-describedby="addon-wrapping"
                           required
-                          value="123456789"
+                          value="<%= user_info.phone_number %>"
                           name="phone_number"
                         />
                       </div>
@@ -128,7 +135,7 @@
                           aria-label="email"
                           aria-describedby="addon-wrapping"
                           required
-                          value="naif@gmail.com"
+                          value="<%= user_info.email %>"
                           name="email"
                         />
                       </div>
@@ -142,24 +149,13 @@
                           aria-label="Default select example"
                           required
                           name="gender"
+                          id="gender"
                         >
                           <option disabled>Gender</option>
                           <option value="female">Female</option>
-                          <option selected value="male">Male</option>
-                          <option value="monkey">Other</option>
+                          <option value="male">Male</option>
+                          <option value="Other">Other</option>
                         </select>
-                      </div>
-                    </div>
-
-                    <!-- date -->
-                    <div class="col-6">
-                      <div class="input-group">
-                        <input
-                          type="date"
-                          class="form-control rounded-pill"
-                          value="2001-06-04"
-                          name="date"
-                        />
                       </div>
                     </div>
 
@@ -219,10 +215,15 @@
                   class="form-control"
                   id="inputGroupFile02"
                   name="user_avatar"
+                  value="<%= user_info.user_avatar %>"
                 />
               </div>
 
-              <input type="hidden" name="user_id" value="<%= user_id %>" />
+              <input
+                type="hidden"
+                name="user_id"
+                value="<%= user_info._id %>"
+              />
 
               <!-- model footer -->
               <div class="modal-footer">
@@ -243,5 +244,23 @@
     </div>
 
     <%- include('./includes/js-files.ejs') %>
+    <script>
+      const userAvatar = document.querySelector('.js-user-avatar');
+      const imgData = userAvatar.getAttribute('data-user-avatar');
+      const avatar = localStorage.getItem('user-avatar');
+
+      localStorage.setItem('user-avatar', imgData);
+
+      userAvatar.setAttribute('src', imgData);
+      document
+        .querySelector('.js-nav-user-avatar')
+        .setAttribute('src', imgData);
+
+      // select
+      document.getElementById('phone-code').value =
+        '<%= user_info.phone_code  %>';
+
+      document.getElementById('gender').value = '<%= user_info.gender  %>';
+    </script>
   </body>
 </html>
