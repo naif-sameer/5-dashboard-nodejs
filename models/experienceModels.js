@@ -31,18 +31,27 @@ const addExperience = (experience_info) => {
 
 // update
 const updateExperience = (experience_info) => {
-  const { experience_id, title, progress_percent } = experience_info;
+  console.log(experience_info);
+  const {
+    experience_id,
+    title,
+    country,
+    work_time,
+    description,
+  } = experience_info;
 
   return Experience.updateOne(
     { _id: experience_id },
-    { title, progress_percent }
+    { title, country, work_time, description }
   );
 };
 
 // delete
 const deleteExperience = (experience_info) => {
   const { experience_id } = experience_info;
-  Experience.find({_id: experience_id}).then(e => console.log('data', e, experience_id))
+  Experience.find({ _id: experience_id }).then((e) =>
+    console.log('data', e, experience_id)
+  );
   return Experience.updateOne({ _id: experience_id }, { is_active: 0 });
 };
 
