@@ -17,50 +17,363 @@
         <!-- Education section -->
         <section class="col-lg-8 col-md-8 col-12">
           <div class="card p-3">
-            <div class="card-header bg-transparent">
+            <div
+              class="card-header bg-transparent d-flex justify-content-between align-items-center"
+            >
               <h1 class="fs-3 fw-bold text-primary">Education</h1>
+
+              <a
+                role="button"
+                data-bs-toggle="modal"
+                data-bs-target="#add-education"
+              >
+                <i class="fa fa-plus fw-bold fs-5 text-primary"></i>
+              </a>
             </div>
 
             <div class="card-body">
-              <!-- experience 1 -->
+              <% if (educations) { %>
+
+              <!-- loop -->
+              <% educations.forEach(education => { %>
+
               <div class="col-12 mb-5">
                 <div class="shadow-sm p-3">
-                  <a href="#">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
                     <h4>
-                      <b>Front end</b>
-                      <span class="fs-5">W3school</span>
+                      <b><%= education.title %></b>
+                      <span class="fs-5"><%= education.school_name %></span>
                     </h4>
-                  </a>
 
-                  <a href="#" class="text-black-50 fs-6 d-flex flex-column">
-                    <h6 class="text-black">Youtube</h6>
-                    <span>July 2021</span>
-                  </a>
+                    <div>
+                      <a
+                        class="mx-2 js-edit-item-btn"
+                        data-education-id="<%= education._id %>"
+                        data-education-title="<%= education.title %>"
+                        data-education-school_name="<%= education.school_name %>"
+                        data-education-place="<%= education.place %>"
+                        data-education-time="<%= education.time %>"
+                        data-education-description="<%= education.description %>"
+                        role="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#edit-education"
+                      >
+                        <i class="fa fa-pencil-alt text-secondary"></i>
+                      </a>
+
+                      <a
+                        role="button"
+                        data-education-id="<%= education._id %>"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete"
+                        class="js-delete-item-btn"
+                      >
+                        <i class="fa fa-trash text-danger"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="text-black-50 fs-6 d-flex flex-column">
+                    <h6 class="text-black"><%= education.place %></h6>
+                    <span><%= education.time %> </span>
+
+                    <p><%= education.description %></p>
+                  </div>
                 </div>
               </div>
 
-              <!--  experience  2-->
-              <div class="col-12 mb-5">
-                <div class="shadow-sm p-3">
-                  <a href="#">
-                    <h4>
-                      <b>Back end</b>
-                      <span class="fs-5">W4school</span>
-                    </h4>
-                  </a>
-
-                  <a href="#" class="text-black-50 fs-6 d-flex flex-column">
-                    <h6 class="text-black">Youtube</h6>
-                    <span>March 2022</span>
-                  </a>
-                </div>
-              </div>
+              <% }) } %>
             </div>
           </div>
         </section>
       </div>
     </main>
 
+    <!-- modals -->
+    <div class="container">
+      <!-- add education Modal  -->
+      <div
+        class="modal fade"
+        id="add-education"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-3">
+            <div class="modal-header">
+              <h4
+                class="modal-title fw-bold text-center"
+                id="exampleModalLabel"
+              >
+                Add education
+              </h4>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form action="/education/add" method="post" class="row g-3">
+                <div>
+                  <label class="ms-3" for="input-edit-title-label-id"
+                    >Title</label
+                  >
+                  <input
+                    id="input-edit-title-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="title"
+                    placeholder="education"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="ms-3" for="input-edit-school_name-label-id"
+                    >School name</label
+                  >
+                  <input
+                    id="input-edit-school_name-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="school_name"
+                    placeholder="school_name"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="ms-3" for="input-edit-place-label-id"
+                    >Place</label
+                  >
+                  <input
+                    id="input-edit-place-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="place"
+                    placeholder="place"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="ms-3" for="input-edit-time-label-id"
+                    >Time</label
+                  >
+                  <input
+                    id="input-edit-time-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="time"
+                    placeholder="time"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <textarea
+                    class="form-control"
+                    name="description"
+                    rows="3"
+                    placeholder="description"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn bg-primary text-white">
+                  add
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- edit education Modal  -->
+      <div
+        class="modal fade"
+        id="edit-education"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-3">
+            <div class="modal-header">
+              <h4
+                class="modal-title fw-bold text-center"
+                id="exampleModalLabel"
+              >
+                Edit education
+              </h4>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form action="/education/update" method="post" class="row g-3">
+                <input
+                  type="hidden"
+                  class="js-edit-modal-id"
+                  name="education_id"
+                />
+                <div>
+                  <label class="ms-3" for="input-edit-title-label-id"
+                    >Title</label
+                  >
+                  <input
+                    id="input-edit-title-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-title"
+                    name="title"
+                    placeholder="education"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="ms-3" for="input-edit-school_name-label-id"
+                    >School name</label
+                  >
+                  <input
+                    id="input-edit-school_name-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-school_name"
+                    name="school_name"
+                    placeholder="school_name"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="ms-3" for="input-edit-place-label-id"
+                    >Place</label
+                  >
+                  <input
+                    id="input-edit-place-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-place"
+                    name="place"
+                    placeholder="place"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="ms-3" for="input-edit-time-label-id"
+                    >Time</label
+                  >
+                  <input
+                    id="input-edit-time-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-time"
+                    name="time"
+                    placeholder="time"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <textarea
+                    class="form-control js-edit-modal-description"
+                    name="description"
+                    rows="3"
+                    placeholder="description"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn bg-primary text-white">
+                  Edit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete education modal -->
+      <div
+        class="modal fade"
+        id="delete"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div
+              class="modal-body fw-bold d-flex justify-content-lg-center align-items-center flex-column"
+            >
+              <i class="bi bi-exclamation-circle fs-1 text-danger"></i>
+              <h3 class="fs-4">Do you want to delete?</h3>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                No
+              </button>
+
+              <form action="/education/delete" method="post">
+                <input type="hidden" name="education_id" id="delete-modal-id" />
+
+                <button
+                  type="submit"
+                  data-bs-dismiss="modal"
+                  class="btn btn-danger"
+                >
+                  Yes
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <%- include('./includes/js-files.ejs') %>
+    <script>
+      // edit
+      const attr = ($el, attrName) => $el.getAttribute(attrName);
+      const el = ($el) => document.querySelector($el);
+
+      document.querySelectorAll('.js-edit-item-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = attr(btn, 'data-education-id');
+          const title = attr(btn, 'data-education-title');
+          const school_name = attr(btn, 'data-education-school_name');
+          const place = attr(btn, 'data-education-place');
+          const time = attr(btn, 'data-education-time');
+          const description = attr(btn, 'data-education-description');
+
+          el('.js-edit-modal-id').value = id;
+          el('.js-edit-modal-title').value = title;
+          el('.js-edit-modal-school_name').value = school_name;
+          el('.js-edit-modal-place').value = place;
+          el('.js-edit-modal-time').value = time;
+          el('.js-edit-modal-description').value = description;
+        });
+      });
+
+      // delete
+      document.querySelectorAll('.js-delete-item-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = attr(btn, 'data-education-id');
+          console.log(id);
+          document.getElementById('delete-modal-id').value = id;
+        });
+      });
+    </script>
   </body>
 </html>
