@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "description": "",
   "private": true,
-  "main": "./bin/start",
+  "main": "app",
   "scripts": {
     "eslint": "./node_modules/eslint/bin/eslint.js --max-warnings 0 --ext .js .",
-    "start": "node ./bin/start",
-    "dev": "nodemon ./bin/start"
+    "start": "node app",
+    "dev": "nodemon app"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",

@@ -13,51 +13,305 @@
         <!-- Dashboard Nav Section -->
         <%- include('./includes/dashboard-nav.ejs', {activeNav : 'courses'}) %>
 
-        <!-- Experience section -->
+        <!-- Education section -->
         <section class="col-lg-8 col-md-8 col-12">
           <div class="card p-3">
-            <header class="card-header bg-transparent">
-              <h3 class="fw-bold text-primary">Courses</h3>
-            </header>
+            <div
+              class="card-header bg-transparent d-flex justify-content-between align-items-center"
+            >
+              <h1 class="fs-3 fw-bold text-primary">Education</h1>
+
+              <a
+                role="button"
+                data-bs-toggle="modal"
+                data-bs-target="#add-course"
+              >
+                <i class="fa fa-plus fw-bold fs-5 text-primary"></i>
+              </a>
+            </div>
 
             <div class="card-body">
-              <div class="row">
-                <!-- experience 1 -->
-                <div class="col-12 mb-5">
-                  <div class="shadow-sm p-3">
-                    <a href="#"> <h4>Front end</h4> </a>
+              <% if (courses) { %>
 
-                    <div class="text-black-50 fs-6 d-flex flex-column">
-                      <span>From 2019 to 2021</span>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Itaque, velit!
-                      </p>
+              <!-- loop -->
+              <% courses.forEach(course => { %>
+
+              <div class="col-12 mb-5">
+                <div class="shadow-sm p-3">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <h4>
+                      <b><%= course.title %></b>
+                      <span class="fs-5"><%= course.course_time %></span>
+                    </h4>
+
+                    <div>
+                      <a
+                        class="mx-2 js-edit-item-btn"
+                        data-course-id="<%= course._id %>"
+                        data-course-title="<%= course.title %>"
+                        data-course-course_time="<%= course.course_time %>"
+                        data-course-description="<%= course.description %>"
+                        role="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#edit-course"
+                      >
+                        <i class="fa fa-pencil-alt text-secondary"></i>
+                      </a>
+
+                      <a
+                        role="button"
+                        data-course-id="<%= course._id %>"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete"
+                        class="js-delete-item-btn"
+                      >
+                        <i class="fa fa-trash text-danger"></i>
+                      </a>
                     </div>
                   </div>
-                </div>
 
-                <!-- experience 2 -->
-                <div class="col-12 mb-5">
-                  <div class="shadow-sm p-3">
-                    <a href="#"> <h4>Back end</h4> </a>
+                  <div class="text-black-50 fs-6 d-flex flex-column">
+                    <h6 class="text-black"><%= course.place %></h6>
+                    <span><%= course.time %> </span>
 
-                    <div class="text-black-50 fs-6 d-flex flex-column">
-                      <span>2021 to 2022</span>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Itaque, velit!
-                      </p>
-                    </div>
+                    <p><%= course.description %></p>
                   </div>
                 </div>
               </div>
+
+              <% }) } %>
             </div>
           </div>
         </section>
       </div>
     </main>
 
+    <!-- modals -->
+    <div class="container">
+      <!-- add course Modal  -->
+      <div
+        class="modal fade"
+        id="add-course"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-3">
+            <div class="modal-header">
+              <h4
+                class="modal-title fw-bold text-center"
+                id="exampleModalLabel"
+              >
+                Add course
+              </h4>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form action="/courses/add" method="post" class="row g-3">
+                <div>
+                  <label class="ms-3" for="input-edit-title-label-id"
+                    >Title</label
+                  >
+                  <input
+                    id="input-edit-title-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="title"
+                    placeholder="course"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="ms-3" for="input-edit-course_time-label-id"
+                    >Course time</label
+                  >
+                  <input
+                    id="input-edit-course_time-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="course_time"
+                    placeholder="course_time"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <textarea
+                    class="form-control"
+                    name="description"
+                    rows="3"
+                    placeholder="description"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn bg-primary text-white">
+                  add
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- edit course Modal  -->
+      <div
+        class="modal fade"
+        id="edit-course"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-3">
+            <div class="modal-header">
+              <h4
+                class="modal-title fw-bold text-center"
+                id="exampleModalLabel"
+              >
+                Edit course
+              </h4>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form action="/courses/update" method="post" class="row g-3">
+                <input
+                  type="hidden"
+                  class="js-edit-modal-id"
+                  name="course_id"
+                />
+                <div>
+                  <label class="ms-3" for="input-edit-title-label-id"
+                    >Title</label
+                  >
+                  <input
+                    id="input-edit-title-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-title"
+                    name="title"
+                    placeholder="course"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="ms-3" for="input-edit-course_time-label-id"
+                    >Course time</label
+                  >
+                  <input
+                    id="input-edit-course_time-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-course_time"
+                    name="course_time"
+                    placeholder="course_time"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <textarea
+                    class="form-control js-edit-modal-description"
+                    name="description"
+                    rows="3"
+                    placeholder="description"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn bg-primary text-white">
+                  Edit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete course modal -->
+      <div
+        class="modal fade"
+        id="delete"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div
+              class="modal-body fw-bold d-flex justify-content-lg-center align-items-center flex-column"
+            >
+              <i class="bi bi-exclamation-circle fs-1 text-danger"></i>
+              <h3 class="fs-4">Do you want to delete?</h3>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                No
+              </button>
+
+              <form action="/courses/delete" method="post">
+                <input type="hidden" name="course_id" id="delete-modal-id" />
+
+                <button
+                  type="submit"
+                  data-bs-dismiss="modal"
+                  class="btn btn-danger"
+                >
+                  Yes
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <%- include('./includes/js-files.ejs') %>
+    <script>
+      // edit
+      const attr = ($el, attrName) => $el.getAttribute(attrName);
+      const el = ($el) => document.querySelector($el);
+
+      document.querySelectorAll('.js-edit-item-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = attr(btn, 'data-course-id');
+          const title = attr(btn, 'data-course-title');
+          const course_time = attr(btn, 'data-course-course_time');
+          const description = attr(btn, 'data-course-description');
+
+          el('.js-edit-modal-id').value = id;
+          el('.js-edit-modal-title').value = title;
+          el('.js-edit-modal-course_time').value = course_time;
+          el('.js-edit-modal-description').value = description;
+        });
+      });
+
+      // delete
+      document.querySelectorAll('.js-delete-item-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = attr(btn, 'data-course-id');
+          console.log(id);
+          document.getElementById('delete-modal-id').value = id;
+        });
+      });
+    </script>
   </body>
 </html>
