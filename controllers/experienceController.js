@@ -33,7 +33,6 @@ const deleteExperience = async (req, res) => {
   try {
     let result = await experienceModels.deleteExperience(req.body);
 
-    console.log(result)
     res.redirect('/experience');
   } catch (err) {
     res.json(err.message);

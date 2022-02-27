@@ -12,7 +12,7 @@
       <div class="row">
         <!-- Dashboard Nav Section -->
         <%- include('./includes/dashboard-nav.ejs', {activeNav : 'experience'})
-        %> 
+        %>
 
         <!-- Experience section -->
         <section class="col-lg-8 col-md-8 col-12">
@@ -25,7 +25,7 @@
               <a
                 role="button"
                 data-bs-toggle="modal"
-                data-bs-target="#add-skill"
+                data-bs-target="#add-experience"
               >
                 <i class="fa fa-plus fw-bold fs-5 text-primary"></i>
               </a>
@@ -47,17 +47,21 @@
                       <div>
                         <a
                           class="mx-2 js-edit-item-btn"
-                          data-experience="<%= experience %>"
+                          data-experience-id="<%= experience._id %>"
+                          data-experience-title="<%= experience.title %>"
+                          data-experience-country="<%= experience.country %>"
+                          data-experience-work_time="<%= experience.work_time %>"
+                          data-experience-description="<%= experience.description %>"
                           role="button"
                           data-bs-toggle="modal"
-                          data-bs-target="#edit-skill"
+                          data-bs-target="#edit-experience"
                         >
                           <i class="fa fa-pencil-alt text-secondary"></i>
                         </a>
 
                         <a
                           role="button"
-                          data-skill-id="<%= experience._id %>"
+                          data-experience-id="<%= experience._id %>"
                           data-bs-toggle="modal"
                           data-bs-target="#delete"
                           class="js-delete-item-btn"
@@ -83,202 +87,226 @@
       </div>
     </main>
 
-    <!-- add skill Modal  -->
-    <div
-      class="modal fade"
-      id="add-skill"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-3">
-          <div class="modal-header">
-            <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">
-              Add experience
-            </h4>
-
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-
-          <div class="modal-body">
-            <form action="/experience/add" method="post" class="row g-3">
-              <div>
-                <label class="ms-3" for="input-title-label-id">Title</label>
-                <input
-                  id="input-title-label-id"
-                  type="text"
-                  class="form-control rounded-pill"
-                  name="title"
-                  placeholder="experience"
-                  required
-                />
-              </div>
-              <div>
-                <label class="ms-3" for="input-country-label-id">Country</label>
-                <input
-                  id="input-country-label-id"
-                  type="text"
-                  class="form-control rounded-pill"
-                  name="country"
-                  placeholder="country"
-                  required
-                />
-              </div>
-
-              <div>
-                <label class="ms-3" for="input-work-time-label-id"
-                  >Work time</label
-                >
-                <input
-                  id="input-work-time-label-id"
-                  type="text"
-                  class="form-control rounded-pill"
-                  name="work_time"
-                  placeholder="work_time"
-                  required
-                />
-              </div>
-
-              <div>
-                <textarea
-                  class="form-control"
-                  name="description"
-                  rows="3"
-                  placeholder="description"
-                ></textarea>
-              </div>
-
-              <button type="submit" class="btn bg-primary text-white">
-                add
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- edit skill Modal  -->
-    <div
-      class="modal fade"
-      id="edit-skill"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-3">
-          <div class="modal-header">
-            <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">
-              Edit experience
-            </h4>
-
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-
-          <div class="modal-body">
-            <form action="/experience/update" method="post" class="row g-3">
-              <div>
-                <label class="ms-3" for="input-title-label-id">Title</label>
-                <input
-                  id="input-title-label-id"
-                  type="text"
-                  class="form-control rounded-pill"
-                  name="title"
-                  placeholder="experience"
-                  required
-                />
-              </div>
-              <div>
-                <label class="ms-3" for="input-country-label-id">Country</label>
-                <input
-                  id="input-country-label-id"
-                  type="text"
-                  class="form-control rounded-pill"
-                  name="country"
-                  placeholder="country"
-                  required
-                />
-              </div>
-
-              <div>
-                <label class="ms-3" for="input-work-time-label-id"
-                  >Work time</label
-                >
-                <input
-                  id="input-work-time-label-id"
-                  type="text"
-                  class="form-control rounded-pill"
-                  name="work_time"
-                  placeholder="work_time"
-                  required
-                />
-              </div>
-
-              <div>
-                <textarea
-                  class="form-control"
-                  name="description"
-                  rows="3"
-                  placeholder="description"
-                ></textarea>
-              </div>
-
-              <button type="submit" class="btn bg-primary text-white">
-                Edit
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Delete skill modal -->
-    <div
-      class="modal fade"
-      id="delete"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div
-            class="modal-body fw-bold d-flex justify-content-lg-center align-items-center flex-column"
-          >
-            <i class="bi bi-exclamation-circle fs-1 text-danger"></i>
-            <h3 class="fs-4">Do you want to delete?</h3>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              No
-            </button>
-
-            <form action="/experience/delete" method="post">
-              <input type="hidden" name="experience_id" id="delete-modal-id" />
+    <!-- modals -->
+    <div class="container">
+      <!-- add experience Modal  -->
+      <div
+        class="modal fade"
+        id="add-experience"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-3">
+            <div class="modal-header">
+              <h4
+                class="modal-title fw-bold text-center"
+                id="exampleModalLabel"
+              >
+                Add experience
+              </h4>
 
               <button
-                type="submit"
+                type="button"
+                class="btn-close"
                 data-bs-dismiss="modal"
-                class="btn btn-danger"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form action="/experience/add" method="post" class="row g-3">
+                <div>
+                  <label class="ms-3" for="input-title-label-id">Title</label>
+                  <input
+                    id="input-title-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="title"
+                    placeholder="experience"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="ms-3" for="input-country-label-id"
+                    >Country</label
+                  >
+                  <input
+                    id="input-country-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="country"
+                    placeholder="country"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="ms-3" for="input-work-time-label-id"
+                    >Work time</label
+                  >
+                  <input
+                    id="input-work-time-label-id"
+                    type="text"
+                    class="form-control rounded-pill"
+                    name="work_time"
+                    placeholder="work_time"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <textarea
+                    class="form-control"
+                    name="description"
+                    rows="3"
+                    placeholder="description"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn bg-primary text-white">
+                  add
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- edit experience Modal  -->
+      <div
+        class="modal fade"
+        id="edit-experience"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-3">
+            <div class="modal-header">
+              <h4
+                class="modal-title fw-bold text-center"
+                id="exampleModalLabel"
               >
-                Yes
+                Edit experience
+              </h4>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form action="/experience/update" method="post" class="row g-3">
+                <input
+                  type="hidden"
+                  class="js-edit-modal-id"
+                  name="experience_id"
+                />
+                <div>
+                  <label class="ms-3" for="input-edit-title-label-id"
+                    >Title</label
+                  >
+                  <input
+                    id="input-edit-title-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-title"
+                    name="title"
+                    placeholder="experience"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="ms-3" for="input-edit-country-label-id"
+                    >Country</label
+                  >
+                  <input
+                    id="input-edit-country-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-country"
+                    name="country"
+                    placeholder="country"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="ms-3" for="input-edit-work-time-label-id"
+                    >Work time</label
+                  >
+                  <input
+                    id="input-edit-work-time-label-id"
+                    type="text"
+                    class="form-control rounded-pill js-edit-modal-work_time"
+                    name="work_time"
+                    placeholder="work_time"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <textarea
+                    class="form-control js-edit-modal-description"
+                    name="description"
+                    rows="3"
+                    placeholder="description"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn bg-primary text-white">
+                  Edit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete experience modal -->
+      <div
+        class="modal fade"
+        id="delete"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div
+              class="modal-body fw-bold d-flex justify-content-lg-center align-items-center flex-column"
+            >
+              <i class="bi bi-exclamation-circle fs-1 text-danger"></i>
+              <h3 class="fs-4">Do you want to delete?</h3>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                No
               </button>
-            </form>
+
+              <form action="/experience/delete" method="post">
+                <input
+                  type="hidden"
+                  name="experience_id"
+                  id="delete-modal-id"
+                />
+
+                <button
+                  type="submit"
+                  data-bs-dismiss="modal"
+                  class="btn btn-danger"
+                >
+                  Yes
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -288,24 +316,28 @@
     <script>
       // edit
       const attr = ($el, attrName) => $el.getAttribute(attrName);
+      const el = ($el) => document.querySelector($el);
+
       document.querySelectorAll('.js-edit-item-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
-          const id = attr(btn, 'data-skill-id');
-          const title = attr(btn, 'data-skill-title');
-          const progress = attr(btn, 'data-skill-progress_percent');
+          const id = attr(btn, 'data-experience-id');
+          const title = attr(btn, 'data-experience-title');
+          const country = attr(btn, 'data-experience-country');
+          const work_time = attr(btn, 'data-experience-work_time');
+          const description = attr(btn, 'data-experience-description');
 
-          console.log(id, title, progress);
-
-          document.getElementById('edit-modal-id').value = id;
-          document.getElementById('skill-title-input').value = title;
-          document.getElementById('skill-progress-input').value = progress;
+          el('.js-edit-modal-id').value = id;
+          el('.js-edit-modal-title').value = title;
+          el('.js-edit-modal-country').value = country;
+          el('.js-edit-modal-work_time').value = work_time;
+          el('.js-edit-modal-description').value = description;
         });
       });
 
       // delete
       document.querySelectorAll('.js-delete-item-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
-          const id = attr(btn, 'data-skill-id');
+          const id = attr(btn, 'data-experience-id');
           console.log(id);
           document.getElementById('delete-modal-id').value = id;
         });
