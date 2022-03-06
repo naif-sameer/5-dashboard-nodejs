@@ -1,5 +1,4 @@
 const express = require('express');
-const httpErrors = require('http-errors');
 const http = require('http');
 const path = require('path');
 
@@ -19,7 +18,9 @@ app.use(indexRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(httpErrors(404));
+  res.render('error', {
+    message: '404 page',
+  });
 });
 
 const server = http.createServer(app);
@@ -27,4 +28,3 @@ const server = http.createServer(app);
 server.listen(port);
 
 console.log(`server run on http://localhost:${port}`);
-
